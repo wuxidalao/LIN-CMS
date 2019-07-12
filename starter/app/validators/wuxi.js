@@ -16,9 +16,9 @@ class CreateOrUpdateBookValidator extends LinValidator {
     this.author = new Rule('isNotEmpty', '作者不可为空');
     this.summary = new Rule('isNotEmpty', '综述不可为空');
     this.image = [
-      new Rule('isNotEmpty', '图片必须传入');
-      new Rule('isLength', '长度必须在0-100之间', {min:0, max: 100});
-    ]
+      new Rule('isNotEmpty', '图片必须传入'),
+      new Rule('isLength', '长度必须在0-100之间', { min: 0, max: 100 })
+    ];
   }
 }
 
