@@ -26,6 +26,15 @@ const bookRouter = {
       inNav: true,
       icon: 'iconfont icon-tushuguanli',
     },
+    {
+      title: '吴习编辑',
+      type: 'view',
+      name: 'wuxiEdit',
+      route: '/wuxi/edit',
+      filePath: 'views/wuxi/WuxiEdit.vue',
+      inNav: true,
+      icon: 'iconfont icon-tushuguanli',
+    },
   ],
 }
 

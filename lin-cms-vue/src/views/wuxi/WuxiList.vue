@@ -1,59 +1,68 @@
 <template>
   <div>
     <!-- 列表页面 -->
-    <div class="container" v-if="!showEdit">
+    <div class="container">
       <div class="header">
         <div class="title">图书列表</div>
       </div>
       <!-- 表格 -->
-      <lin-table
-        :tableColumn="tableColumn"
-        :tableData="tableData"
-        :operate="operate"
-        @handleEdit="handleEdit"
-        @handleDelete="handleDelete"
-        @row-click="rowClick"
-        v-loading="loading"></lin-table>
+      <template>
+        <el-table
+          :data="tableData"
+          border
+          style="width: 100%">
+          <el-table-column
+            fixed
+            prop="id"
+            label="序号"
+            width="120">
+          </el-table-column>
+          <el-table-column
+            prop="title"
+            label="书名"
+            width="120">
+          </el-table-column>
+          <el-table-column
+            prop="author"
+            label="作者"
+            width="120">
+          </el-table-column>
+          <el-table-column
+            prop="summary"
+            label="简介"
+            min-width="400">
+          </el-table-column>
+          <el-table-column
+            fixed="right"
+            label="操作"
+            width="150">
+            <template slot-scope="scope">
+              <el-button @click="handleClick(scope.row)" type="" size="mini">编辑</el-button>
+              <el-button @click.native.prevent="handleDelete(scope.$index, tableData)" type="danger" size="mini">删除</el-button>
+            </template>
+          </el-table-column>
+        </el-table>
+      </template>
     </div>
-
-    <!-- 编辑页面 -->
-    <wuxi-edit v-else @editClose="editClose" :editBookID="editBookID"></wuxi-edit>
 
   </div>
 </template>
 
 <script>
-import wuxi from '@/models/wuxi'
-import LinTable from '@/components/base/table/lin-table'
-import WuxiEdit from './WuxiEdit'
+import wuxi from '@/models/wuxi.js'
 
 export default {
-  components: {
-    LinTable,
-    WuxiEdit,
-  },
   data() {
     return {
-      tableColumn: [{ prop: 'title', label: '书名' }, { prop: 'author', label: '作者' }],
       tableData: [],
-      operate: [],
-      showEdit: false,
-      editBookID: 1,
     }
   },
   async created() {
-    this.loading = true
-    this.getWuxis()
-    this.operate = [{ name: '编辑', func: 'handleEdit', type: 'primary' }, {
-      name: '删除',
-      func: 'handleDelete',
-      type: 'danger',
-      auth: '删除图书',
-    }]
-    this.loading = false
+    await this.getWuxis()
+    await this.delectWuxi()
   },
   methods: {
-    async getWuxis() {
+    async getWuxis() { // 获取所有图书内容
       try {
         const wuxis = await wuxi.getWuxis()
         this.tableData = wuxis
@@ -62,11 +71,6 @@ export default {
           this.tableData = []
         }
       }
-    },
-    handleEdit(val) {
-      console.log('val', val)
-      this.showEdit = true
-      this.editBookID = val.row.id
     },
     handleDelete(val) {
       this.$confirm('此操作将永久删除该图书, 是否继续?', '提示', {
@@ -84,12 +88,8 @@ export default {
         }
       })
     },
-    rowClick() {
-
-    },
-    editClose() {
-      this.showEdit = false
-      this.getWuxis()
+    handleClick() {
+      this.$router.push('/wuxi/edit/:id')
     },
   },
 }
