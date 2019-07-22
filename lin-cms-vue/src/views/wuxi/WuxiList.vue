@@ -37,7 +37,7 @@
             label="操作"
             width="150">
             <template slot-scope="scope">
-              <el-button @click="handleClick(scope.row)" type="" size="mini">查看</el-button>
+              <el-button @click="handleClick(scope.row)" type="" size="mini">编辑</el-button>
               <el-button @click.native.prevent="handleDelete(scope.$index, tableData)" type="danger" size="mini">删除</el-button>
             </template>
           </el-table-column>
@@ -59,13 +59,23 @@ export default {
   },
   async created() {
     await this.getWuxis()
+    await this.delectWuxi()
   },
   methods: {
-    async getWuxis() {
+    async getWuxis() { // 获取所有图书内容
       try {
         const wuxis = await wuxi.getWuxis()
         this.tableData = wuxis
-        console.log(this.tableData)
+      } catch (error) {
+        if (error.error_code === 10020) {
+          this.tableData = []
+        }
+      }
+    },
+    async delectWuxi() { // 删除图书
+      try {
+        const delectwuxi = await wuxi.delectWuxi()
+        // console.log(delectwuxi)
       } catch (error) {
         if (error.error_code === 10020) {
           this.tableData = []
@@ -74,6 +84,13 @@ export default {
     },
     handleDelete(index, row) {
       row.splice(index, 1)
+      this.$message({
+        message: '删除成功！',
+        type: 'success',
+      })
+    },
+    handleClick() {
+      this.$router.push('/wuxi/edit/:id')
     },
   },
 }
