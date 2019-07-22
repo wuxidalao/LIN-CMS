@@ -1,20 +1,42 @@
 <template>
   <div>
+    <div class="container">
+      <!-- 标题 -->
+      <div class="header">
+        <div class="title">吴习添加</div>
+      </div>
+      <!-- 表格 -->
 
+    </div>
   </div>
 </template>
 <script>
 export default {
-  data() {
-    return {
 
-    }
-  },
-  methods: {
-
-  },
 }
 </script>
-<style scoped>
+<style lang="scss" scoped>
+.container {
+  padding: 0 30px;
 
+  .header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    .title {
+      height: 59px;
+      line-height: 59px;
+      color: $parent-title-color;
+      font-size: 16px;
+      font-weight: 500;
+    }
+  }
+
+  .pagination {
+    display: flex;
+    justify-content: flex-end;
+    margin: 20px;
+  }
+}
 </style>
