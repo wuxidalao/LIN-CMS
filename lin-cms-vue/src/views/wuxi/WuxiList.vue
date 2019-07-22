@@ -72,21 +72,20 @@ export default {
         }
       }
     },
-    async delectWuxi() { // 删除图书
-      try {
-        const delectwuxi = await wuxi.delectWuxi()
-        // console.log(delectwuxi)
-      } catch (error) {
-        if (error.error_code === 10020) {
-          this.tableData = []
+    handleDelete(val) {
+      this.$confirm('此操作将永久删除该图书, 是否继续?', '提示', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning',
+      }).then(async () => {
+        const res = await wuxi.delectWuxi(val.row.id)
+        if (res.error_code === 0) {
+          this.getWuxis()
+          this.$message({
+            type: 'success',
+            message: `${res.msg}`,
+          })
         }
-      }
-    },
-    handleDelete(index, row) {
-      row.splice(index, 1)
-      this.$message({
-        message: '删除成功！',
-        type: 'success',
       })
     },
     handleClick() {
