@@ -6,14 +6,38 @@
         <div class="title">图书列表</div>
       </div>
       <!-- 表格 -->
-      <lin-table
-        :tableColumn="tableColumn"
-        :tableData="tableData"
-        :operate="operate"
-        @handleEdit="handleEdit"
-        @handleDelete="handleDelete"
-        @row-click="rowClick"
-        v-loading="loading"></lin-table>
+      <template>
+        <el-table
+          :data="tableData.filter(data => !search || data.name.toLowerCase().includes(search.toLowerCase()))"
+          style="width: 100%">
+          <el-table-column
+            label="Date"
+            prop="date">
+          </el-table-column>
+          <el-table-column
+            label="Name"
+            prop="name">
+          </el-table-column>
+          <el-table-column
+            align="right">
+            <template slot="header" slot-scope="scope">
+              <el-input
+                v-model="search"
+                size="mini"
+                placeholder="输入关键字搜索"/>
+            </template>
+            <template slot-scope="scope">
+              <el-button
+                size="mini"
+                @click="handleEdit(scope.$index, scope.row)">Edit</el-button>
+              <el-button
+                size="mini"
+                type="danger"
+                @click="handleDelete(scope.$index, scope.row)">Delete</el-button>
+            </template>
+          </el-table-column>
+        </el-table>
+      </template>
     </div>
 
     <!-- 编辑页面 -->
@@ -24,73 +48,37 @@
 
 <script>
 import wuxi from '@/models/wuxi'
-import LinTable from '@/components/base/table/lin-table'
 import WuxiEdit from './WuxiEdit'
 
 export default {
   components: {
-    LinTable,
     WuxiEdit,
   },
   data() {
     return {
-      tableColumn: [{ prop: 'title', label: '书名' }, { prop: 'author', label: '作者' }],
-      tableData: [],
-      operate: [],
-      showEdit: false,
-      editBookID: 1,
+      tableData: [{
+        date: '2016-05-02',
+        name: '王小虎',
+        address: '上海市普陀区金沙江路 1518 弄',
+      }, {
+        date: '2016-05-04',
+        name: '王小虎',
+        address: '上海市普陀区金沙江路 1517 弄',
+      }, {
+        date: '2016-05-01',
+        name: '王小虎',
+        address: '上海市普陀区金沙江路 1519 弄',
+      }, {
+        date: '2016-05-03',
+        name: '王小虎',
+        address: '上海市普陀区金沙江路 1516 弄',
+      }],
+      search: '',
     }
   },
-  async created() {
-    this.loading = true
-    this.getWuxis()
-    this.operate = [{ name: '编辑', func: 'handleEdit', type: 'primary' }, {
-      name: '删除',
-      func: 'handleDelete',
-      type: 'danger',
-      auth: '删除图书',
-    }]
-    this.loading = false
-  },
-  methods: {
-    async getWuxis() {
-      try {
-        const wuxis = await wuxi.getWuxis()
-        this.tableData = wuxis
-      } catch (error) {
-        if (error.error_code === 10020) {
-          this.tableData = []
-        }
-      }
-    },
-    handleEdit(val) {
-      console.log('val', val)
-      this.showEdit = true
-      this.editBookID = val.row.id
-    },
-    handleDelete(val) {
-      this.$confirm('此操作将永久删除该图书, 是否继续?', '提示', {
-        confirmButtonText: '确定',
-        cancelButtonText: '取消',
-        type: 'warning',
-      }).then(async () => {
-        const res = await wuxi.delectWuxi(val.row.id)
-        if (res.error_code === 0) {
-          this.getWuxis()
-          this.$message({
-            type: 'success',
-            message: `${res.msg}`,
-          })
-        }
-      })
-    },
-    rowClick() {
 
-    },
-    editClose() {
-      this.showEdit = false
-      this.getWuxis()
-    },
+  methods: {
+
   },
 }
 </script>
