@@ -1,13 +1,12 @@
 import adminConfig from './admin'
 import bookConfig from './book' // 引入图书管理路由文件
-import wuxiConfig from './wuxi'
 import pluginsConfig from './plugins'
 import Utils from '@/lin/utils/util'
 
 // eslint-disable-next-line import/no-mutable-exports
 let homeRouter = [
   {
-    title: '众力普惠',
+    title: '林间有风',
     type: 'view',
     name: Symbol('about'),
     route: '/about',
@@ -37,7 +36,6 @@ let homeRouter = [
     icon: 'iconfont icon-rizhiguanli',
   },
   bookConfig,
-  wuxiConfig,
   adminConfig,
 ]
 
