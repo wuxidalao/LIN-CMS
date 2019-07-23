@@ -39,7 +39,7 @@ export default {
     async onSubmit(formName) {
       try {
         const res = await wuxi.addWuxi(this.form)
-      } catch (res.error_code === 0) {
+      } catch (error) {
         this.$message.success(`${res.msg}`)
         this.resetForm(formName)
       }
