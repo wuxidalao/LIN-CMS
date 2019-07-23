@@ -71,13 +71,13 @@ export default {
         }
       }
     },
-    handleDelete(id) {
+    handleDelete(val) {
       this.$confirm('此操作将永久删除该图书, 是否继续?', '提示', {
         confirmButtonText: '确定',
         cancelButtonText: '取消',
         type: 'warning',
       }).then(async () => {
-        const res = await wuxi.delectWuxi(id)
+        const res = await wuxi.delectWuxi(val.row.id)
         if (res.error_code === 0) {
           this.getWuxis()
           this.$message({
