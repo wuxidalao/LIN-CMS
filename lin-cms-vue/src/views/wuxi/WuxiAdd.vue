@@ -6,15 +6,18 @@
         <div class="title">吴习添加</div>
       </div>
       <!-- 表格 -->
-      <el-form ref="form" :model="form" label-width="80px">
+      <el-form ref="form" :model="form" label-width="100px">
         <el-form-item label="书名">
-          <el-input v-model="form.title"></el-input>
+          <el-input v-model="form.title" placeholder="请输入书名"></el-input>
         </el-form-item>
         <el-form-item label="作者">
-          <el-input v-model="form.author"></el-input>
+          <el-input v-model="form.author" placeholder="请输入作者"></el-input>
         </el-form-item>
         <el-form-item label="简介">
-          <el-input v-model="form.summary"></el-input>
+          <el-input type="textarea" v-model="form.summary" placeholder="请输入简介"></el-input>
+        </el-form-item>
+        <el-form-item label="封面">
+          <el-input v-model="form.image" placeholder="请输入图片地址"></el-input>
         </el-form-item>
         <el-form-item>
           <el-button type="primary" @click="onSubmit('form')">确定</el-button>
@@ -25,6 +28,8 @@
   </div>
 </template>
 <script>
+import wuxi from '@/models/wuxi.js'
+
 export default {
   data() {
     return {
@@ -32,6 +37,7 @@ export default {
         title: '',
         author: '',
         summary: '',
+        image: '',
       },
     }
   },
@@ -39,9 +45,11 @@ export default {
     async onSubmit(formName) {
       try {
         const res = await wuxi.addWuxi(this.form)
-      } catch (error) {
         this.$message.success(`${res.msg}`)
         this.resetForm(formName)
+        this.res = ''
+      } catch (error) {
+        console.log(error)
       }
     },
   },

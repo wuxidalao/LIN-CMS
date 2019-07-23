@@ -5,8 +5,8 @@
         <div class="welcome">
           <img src="../../assets/img/about/welcome.png" class="welcome-title" alt="">
           <div class="subtitle">
-            <div class="guide">您还可以点众力普惠官方网站，查看更多信息</div>
-            <div class="link"><a href="http://www.zlph8.com" target="_blank">http://www.zlph8.com</a></div>
+            <div class="guide">您还可以点击林间有风官方网站，查看更多作品</div>
+            <div class="link"><a href="http://www.7yue.pro" target="_blank">http://www.7yue.pro</a></div>
           </div>
         </div>
         <img class="welcome-bg" src="../../assets/img/about/header-bg.png" alt="">
@@ -36,6 +36,7 @@
                     <li>圈圈</li>
                     <li>家乐</li>
                     <li>Jocky</li>
+                    <li>流乔</li>
                   </ul>
                   <ul v-else>
                     <li>林间有风 CMS 组</li>
@@ -185,6 +186,7 @@
 </template>
 
 <script>
+
 export default {
   data() {
     return {
