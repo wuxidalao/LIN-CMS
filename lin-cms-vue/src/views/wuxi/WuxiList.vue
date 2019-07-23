@@ -59,7 +59,6 @@ export default {
   },
   async created() {
     await this.getWuxis()
-    await this.delectWuxi()
   },
   methods: {
     async getWuxis() { // 获取所有图书内容
@@ -72,13 +71,13 @@ export default {
         }
       }
     },
-    handleDelete(val) {
+    handleDelete(id) {
       this.$confirm('此操作将永久删除该图书, 是否继续?', '提示', {
         confirmButtonText: '确定',
         cancelButtonText: '取消',
         type: 'warning',
       }).then(async () => {
-        const res = await wuxi.delectWuxi(val.row.id)
+        const res = await wuxi.delectWuxi(id)
         if (res.error_code === 0) {
           this.getWuxis()
           this.$message({
