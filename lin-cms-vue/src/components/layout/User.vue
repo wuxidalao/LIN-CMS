@@ -113,8 +113,10 @@ import 'vue-croppa/dist/vue-croppa.css'
 import defaultAvatar from '@/assets/img/user/user.png'
 
 Vue.use(Croppa)
+
 const width = 150
 const height = 150
+
 export default {
   name: 'user',
   components: {},
@@ -218,6 +220,7 @@ export default {
         this.clearFileInput(this.$refs.avatarInput)
         return
       }
+
       // 验证图像是否符合要求
       const imgSrc = window.URL.createObjectURL(imgFile)
       const image = new Image()
@@ -257,6 +260,7 @@ export default {
       const file = new File([blob], 'avatar.jpg', {
         type: 'image/jpeg',
       })
+
       return this.$axios({
         method: 'post',
         url: '/cms/file/',
@@ -356,13 +360,16 @@ export default {
   border-bottom: 1px solid #dae1ed;
   padding-bottom: 20px;
 }
+
 .user-dialog /deep/ .el-dialog .el-dialog__body {
   padding-bottom: 00px;
 }
+
 .user {
   height: 40px;
   .el-dropdown-link {
     cursor: pointer;
+
     .nav-avatar {
       width: 40px;
       height: 40px;
@@ -372,6 +379,7 @@ export default {
     }
   }
 }
+
 .user-box {
   width: 326px;
   background-color: none;
@@ -379,6 +387,7 @@ export default {
   margin-bottom: 0;
   padding-bottom: 0;
   border: none;
+
   .user-info {
     background-image: url("../../assets/img/user/user-bg.png");
     background-size: 100% 100%;
@@ -390,6 +399,7 @@ export default {
     padding: 35px 20px 25px 30px;
     z-index: 100;
     position: relative;
+
     .corner {
       position: absolute;
       right: 18px;
@@ -397,6 +407,7 @@ export default {
       width: 27px;
       height: 10px;
     }
+
     .avatar {
       width: 80px;
       height: 80px;
@@ -404,6 +415,7 @@ export default {
       cursor: pointer;
       overflow: hidden;
       position: relative;
+
       .mask {
         opacity: 0;
         transition: all .2s;
@@ -418,32 +430,38 @@ export default {
         align-items: center;
         cursor: pointer;
         color: white;
+
         input {
           display: none;
         }
       }
+
       &:hover {
         .mask {
           opacity: 1;
         }
       }
     }
+
     .text {
       margin-left: 20px;
       color: #fff;
       display: flex;
       flex-direction: column;
       justify-content: center;
+
       .username {
         margin-bottom: 10px;
         font-size: 16px;
       }
+
       .desc {
         font-size: 14px;
         color: rgba(222, 226, 230, 1);
       }
     }
   }
+
   .dropdown-box {
     display: flex;
     flex-direction: column;
@@ -454,19 +472,25 @@ export default {
     font-size: 14px;
     background: white;
     margin-top: -10px;
+
     li {
       cursor: pointer;
+
       &:nth-child(1) {
         margin-top: 20px;
       }
+
       &:nth-child(2) {
         margin-bottom: 20px;
       }
+
       i {
         margin-right: 10px;
       }
+
       &:hover {
         color: $theme !important;
+
         i {
           color: $theme !important;
         }
@@ -474,9 +498,11 @@ export default {
     }
   }
 }
+
 .popper__arrow {
   display: none !important;
 }
+
 .avatar-croppa-container {
   display: inline-block;
   border-color: #3862bc;

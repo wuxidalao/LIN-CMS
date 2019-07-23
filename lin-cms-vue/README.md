@@ -1,7 +1,7 @@
 
 <p align="center">
   <a href="http://doc.cms.7yue.pro/">
-    <img width="200" src="https://consumervssalonqa01.blob.core.chinacloudapi.cn/vssaloncontainer/lin/left-logo.png">
+    <img width="200" src="https://consumerminiaclprd01.blob.core.chinacloudapi.cn/miniappbackground/sfgmember/lin/left-logo.png">
   </a>
 </p>
 
@@ -89,7 +89,12 @@ QQ群搜索：林间有风 或 643205479
 
 ## 版本日志
 
-最新版本 `0.1.0-beta.3`
+最新版本 `0.2.0`
+
+### 0.2.0
+
+1. `A` 新增图像上传、图像预览、富文本等自定义组件
+2. `A` 新增 lin-cms-ui 多个基础组件
 
 ### 0.1.0-beta.3
 
