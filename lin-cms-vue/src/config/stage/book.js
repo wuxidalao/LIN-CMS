@@ -26,15 +26,6 @@ const bookRouter = {
       inNav: true,
       icon: 'iconfont icon-tushuguanli',
     },
-    {
-      title: '测试',
-      type: 'view',
-      name: 'test',
-      route: '/book/test',
-      filePath: 'views/book/test.vue',
-      inNav: true,
-      icon: 'iconfont icon-tushuguanli',
-    },
   ],
 }
 
