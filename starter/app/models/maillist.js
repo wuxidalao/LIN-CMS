@@ -34,7 +34,7 @@ Maillist.init(
   },
   merge(
     {
-      tableName: 'maillist',
+      tableName: 'mailList',
       modelName: 'maillist',
       sequelize: db
     },
