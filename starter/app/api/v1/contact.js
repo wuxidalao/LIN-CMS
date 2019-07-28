@@ -20,7 +20,7 @@ contactApi.get('/', async ctx => {
 });
 // 创建联系人
 contactApi.post('/', async ctx => {
-  const v = await new CreateOrUpdateMaillistValidator().validate(ctx);
+  const v = await new CreateOrUpdateContactValidator().validate(ctx);
   const contact = await Contact.findOne({
     where: {
       name: v.get('body.name'),
@@ -32,7 +32,7 @@ contactApi.post('/', async ctx => {
       msg: '联系人已存在'
     });
   }
-  const ml = new Maillist();
+  const ml = new Contact();
   ml.name = v.get('body.name');
   ml.tel = v.get('body.tel');
   ml.save();
@@ -61,7 +61,7 @@ contactApi.delete('/deleteContact', '/:id', async ctx => {
 });
 // 编辑、保存联系人
 contactApi.put('/:id', async ctx => {
-  const v = await new CreateOrUpdateMaillistValidator().validate(ctx);
+  const v = await new CreateOrUpdateContactValidator().validate(ctx);
   const id = getSafeParamId(ctx);
   const contact = await Contact.findById(id);
   if (!contact) {
@@ -78,7 +78,7 @@ contactApi.put('/:id', async ctx => {
 });
 // 搜索联系人
 contactApi.get('/search/one', async ctx => {
-  const v = await new CreateOrUpdateMaillistValidator().validate(ctx);
+  const v = await new CreateOrUpdateContactValidator().validate(ctx);
   const contact = await Contact.findOne({
     where: {
       name: {

@@ -19,10 +19,6 @@
           <el-button>取消</el-button>
         </el-form-item>
       </el-form>
-
-
-
-
     </div>
   </div>
 </template>
@@ -48,8 +44,8 @@ export default {
   },
   methods: {
     async editContact() {
-      const editContact = await Contact.editContact(this.editContactID, this.form)
-      // this.form = editContact
+      const editContact = await Contact.editContact(this.editContactID)
+      this.form = editContact
     },
     goBack () {
       this.$emit('editHide')

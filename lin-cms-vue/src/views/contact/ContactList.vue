@@ -29,7 +29,7 @@
             <template slot-scope="scope">
               <el-button
                 size="mini"
-                @click="handleEdit(scope.$index, scope.row)">编辑</el-button>
+                @click="handleEdit(scope.row)">编辑</el-button>
               <el-button
                 size="mini"
                 type="danger"
@@ -72,10 +72,10 @@ export default {
         }
       }
     },
-    async handleEdit(val) {
+    async handleEdit(row) {
       this.showEdit = false
-      this.editContactID = val
-      console.log(val)
+      // console.log(row)
+      this.editContactID = row.id
     },
     editShow () {
       this.showEdit = true
