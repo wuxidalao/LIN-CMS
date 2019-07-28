@@ -5,7 +5,7 @@ const { merge } = require('lodash');
 const { Sequelize, Model } = require('sequelize');
 const { db } = require('lin-mizar/lin/db');
 
-class Maillist extends Model {
+class Contact extends Model {
   toJSON () {
     let origin = {
       id: this.id,
@@ -16,7 +16,7 @@ class Maillist extends Model {
   }
 }
 
-Maillist.init(
+Contact.init(
   {
     id: {
       type: Sequelize.INTEGER,
@@ -24,22 +24,22 @@ Maillist.init(
       autoIncrement: true
     },
     name: {
-      type: Sequelize.INTEGER,
+      type: Sequelize.STRING,
       allowNull: true
     },
     tel: {
-      type: Sequelize.INTEGER,
+      type: Sequelize.STRING,
       allowNull: true
     }
   },
   merge(
     {
-      tableName: 'mailList',
-      modelName: 'maillist',
+      tableName: 'contact',
+      modelName: 'contact',
       sequelize: db
     },
     InfoCrudMixin.options
   )
 );
 
-module.exports = { Maillist };
+module.exports = { Contact };

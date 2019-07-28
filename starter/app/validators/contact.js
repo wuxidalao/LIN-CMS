@@ -2,7 +2,7 @@
 
 const { LinValidator, Rule } = require('lin-mizar');
 
-class CreateOrUpdateMaillistValidator extends LinValidator {
+class CreateOrUpdateContactValidator extends LinValidator {
   constructor () {
     super();
     this.name = new Rule('isNotEmpty', '请输入姓名');
@@ -10,4 +10,4 @@ class CreateOrUpdateMaillistValidator extends LinValidator {
   }
 }
 
-module.exports = { CreateOrUpdateMaillistValidator };
+module.exports = { CreateOrUpdateContactValidator };

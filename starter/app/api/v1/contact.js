@@ -1,33 +1,33 @@
 const { LinRouter, NotFound } = require('lin-mizar');
 const { Op } = require('sequelize');
-const { Maillist } = require('../../models/maillist');
+const { Contact } = require('../../models/contact');
 const { getSafeParamId } = require('../../libs/util');
-const { CreateOrUpdateMaillistValidator } = require('../../validators/maillist');
+const { CreateOrUpdateContactValidator } = require('../../validators/contact');
 
-const maillistApi = new LinRouter({
-  prefix: '/v1/maillist'
+const contactApi = new LinRouter({
+  prefix: '/v1/contact'
 });
 
 // 获取所有联系人列表
-maillistApi.get('/', async ctx => {
-  const maillists = await Maillist.findAll();
-  if (maillists.length < 1) {
+contactApi.get('/', async ctx => {
+  const contact = await Contact.findAll();
+  if (contact.length < 1) {
     throw new NotFound({
       msg: '没有联系人信息'
     });
   }
-  ctx.json(maillists);
+  ctx.json(contact);
 });
 // 创建联系人
-maillistApi.post('/', async ctx => {
+contactApi.post('/', async ctx => {
   const v = await new CreateOrUpdateMaillistValidator().validate(ctx);
-  const maillist = await Maillist.findOne({
+  const contact = await Contact.findOne({
     where: {
       name: v.get('body.name'),
       delete_time: null
     }
   });
-  if (maillist) {
+  if (contact) {
     throw new NotFound({
       msg: '联系人已存在'
     });
@@ -41,45 +41,45 @@ maillistApi.post('/', async ctx => {
   });
 });
 // 删除联系人
-maillistApi.delete('/deleteMaillist', '/:id', async ctx => {
+contactApi.delete('/deleteContact', '/:id', async ctx => {
   const id = getSafeParamId(ctx);
-  const maillist = await Maillist.findOne({
+  const contact = await Contact.findOne({
     where: {
       id,
       delete_time: null
     }
   });
-  if (!maillist) {
+  if (!contact) {
     throw new NotFound({
       msg: '没有找到相关联系人'
     });
   }
-  maillist.destroy();
+  contact.destroy();
   ctx.success({
     msg: '删除联系人成功'
   });
 });
 // 编辑、保存联系人
-maillistApi.put('/:id', async ctx => {
+contactApi.put('/:id', async ctx => {
   const v = await new CreateOrUpdateMaillistValidator().validate(ctx);
   const id = getSafeParamId(ctx);
-  const maillist = await Maillist.findById(id);
-  if (!maillist) {
+  const contact = await Contact.findById(id);
+  if (!contact) {
     throw new NotFound({
       msg: '没有找到相关联系人'
     });
   }
-  maillist.name = v.get('body.name');
-  maillist.tel = v.get('body.tel');
-  maillist.save();
+  contact.name = v.get('body.name');
+  contact.tel = v.get('body.tel');
+  contact.save();
   ctx.success({
     msg: '保存成功'
   });
 });
 // 搜索联系人
-maillistApi.get('/search/one', async ctx => {
+contactApi.get('/search/one', async ctx => {
   const v = await new CreateOrUpdateMaillistValidator().validate(ctx);
-  const maillist = await Maillist.findOne({
+  const contact = await Contact.findOne({
     where: {
       name: {
         [Op.like]: `%${v.get('query.q')}%`
@@ -87,12 +87,12 @@ maillistApi.get('/search/one', async ctx => {
       delete_time: null
     }
   });
-  if (!maillist) {
+  if (!contact) {
     throw new NotFound({
       msg: '没有相关联系人'
     });
   }
-  ctx.json(maillist);
+  ctx.json(contact);
 });
 
-module.exports = { maillistApi };
+module.exports = { contactApi };
