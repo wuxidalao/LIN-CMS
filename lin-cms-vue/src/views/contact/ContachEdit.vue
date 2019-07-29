@@ -28,7 +28,9 @@ import Contact from '@/models/contact'
 
 export default {
   props: {
-    editContactID: Number,
+    editBookID: {
+      type: Number,
+    },
   },
   components: {
 
