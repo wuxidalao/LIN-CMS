@@ -42,7 +42,7 @@ export default {
     }
   },
   async created() {
-    this.form = await Contact.editContact(this.editContactID)
+    this.form = await Contact.getContact(this.editContactID)
     console.log(this.form)
   },
   methods: {

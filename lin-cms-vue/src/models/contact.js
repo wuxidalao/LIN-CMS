@@ -14,8 +14,15 @@ class Contact {
     return res
   }
 
-  async getBook(id) {
+  // 获取一个
+  async getContact(id) {
     const res = await get(`v1/book/${id}`)
+    return res
+  }
+
+  // 创建联系人
+  async createContact(info) {
+    const res = await post('v1/contact/', info)
     return res
   }
 
@@ -25,13 +32,15 @@ class Contact {
     return res
   }
 
-  async delectBook(id) {
-    const res = await _delete(`v1/book/${id}`)
+  // 删除
+  async deleteContact(id) {
+    const res = await _delete(`v1/contact/${id}`)
     return res
   }
 
-  async getBooks() {
-    const res = await get('v1/book/')
+  // 搜索
+  async searchContact(q) {
+    const res = await get(`v1/contact/${q}`)
     return res
   }
 }

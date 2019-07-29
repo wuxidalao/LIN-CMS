@@ -18,6 +18,18 @@ contactApi.get('/', async ctx => {
   }
   ctx.json(contact);
 });
+// 获取一个联系人
+contactApi.get('/:id', async ctx => {
+  const id = getSafeParamId(ctx);
+  const book = await Contact.findOne({
+    where: {
+      id,
+      delete_time: null
+    }
+  });
+  ctx.json(book);
+});
+
 // 创建联系人 ok
 contactApi.post('/', async ctx => {
   const v = await new CreateOrUpdateContactValidator().validate(ctx);
