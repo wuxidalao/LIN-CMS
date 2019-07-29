@@ -8,10 +8,10 @@
       </div>
       <!-- 表单 -->
       <el-form ref="form" :model="form" label-width="80px">
-        <el-form-item label="姓名">
+        <el-form-item label="姓名" prop="name">
           <el-input v-model="form.name"></el-input>
         </el-form-item>
-        <el-form-item label="手机号">
+        <el-form-item label="手机号" prop="tel">
           <el-input v-model="form.tel"></el-input>
         </el-form-item>
         <el-form-item>
@@ -28,33 +28,41 @@ import Contact from '@/models/contact'
 
 export default {
   props: {
-    editContactID: Number
+    editContactID: Number,
   },
   components: {
 
   },
   data() {
     return {
-      form: {}
+      form: {
+        name: '',
+        tel: '',
+      },
     }
   },
   async created() {
-    // this.form = await this.Contact.editContact(this.editContactID)
-    this.editContact()
+    this.form = await Contact.editContact(this.editContactID)
+    console.log(this.form)
   },
   methods: {
-    async editContact() {
-      const editContact = await Contact.editContact(this.editContactID)
-      this.form = editContact
-    },
-    goBack () {
+    // async editContact(info) {
+    //   const editcontact = await Contact.editContact(this.editContactID, info)
+    //   this.form = editcontact(info)
+    //   console.log(editcontact)
+    // },
+    goBack() {
       this.$emit('editHide')
     },
-    async onSubmit () {
-      // const res = editContact(this.editContactID, this.form)
-    }
-  }
-  
+    async submitForm() {
+      const res = await Contact.editContact(this.editContactID, this.form)
+      if (res.error_code === 0) {
+        this.$message.success(`${res.msg}`)
+        this.$emit('editClose')
+      }
+    },
+  },
+
 }
 </script>
 

@@ -8,7 +8,7 @@ const contactApi = new LinRouter({
   prefix: '/v1/contact'
 });
 
-// 获取所有联系人列表
+// 获取所有联系人列表 ok
 contactApi.get('/', async ctx => {
   const contact = await Contact.findAll();
   if (contact.length < 1) {
@@ -18,7 +18,7 @@ contactApi.get('/', async ctx => {
   }
   ctx.json(contact);
 });
-// 创建联系人
+// 创建联系人 ok
 contactApi.post('/', async ctx => {
   const v = await new CreateOrUpdateContactValidator().validate(ctx);
   const contact = await Contact.findOne({
@@ -41,29 +41,35 @@ contactApi.post('/', async ctx => {
   });
 });
 // 删除联系人
-contactApi.delete('/deleteContact', '/:id', async ctx => {
-  const id = getSafeParamId(ctx);
-  const contact = await Contact.findOne({
-    where: {
-      id,
-      delete_time: null
-    }
-  });
-  if (!contact) {
-    throw new NotFound({
-      msg: '没有找到相关联系人'
+contactApi.linDelete('/deleteContact', '/:id',
+  {
+    auth: '删除图书',
+    module: '图书',
+    mount: false
+  },
+  async ctx => {
+    const id = getSafeParamId(ctx);
+    const contact = await Contact.findOne({
+      where: {
+        id,
+        delete_time: null
+      }
     });
-  }
-  contact.destroy();
-  ctx.success({
-    msg: '删除联系人成功'
+    if (!contact) {
+      throw new NotFound({
+        msg: '没有找到联系人'
+      });
+    }
+    contact.destroy();
+    ctx.success({
+      msg: '删除联系人成功'
+    });
   });
-});
-// 编辑、保存联系人
+// 编辑、保存联系人 ok
 contactApi.put('/:id', async ctx => {
   const v = await new CreateOrUpdateContactValidator().validate(ctx);
   const id = getSafeParamId(ctx);
-  const contact = await Contact.findById(id);
+  const contact = await Contact.findByPk(id);
   if (!contact) {
     throw new NotFound({
       msg: '没有找到相关联系人'

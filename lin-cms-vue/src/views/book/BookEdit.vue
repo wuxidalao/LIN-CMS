@@ -74,6 +74,7 @@ export default {
   async mounted() {
     this.loading = true
     this.form = await book.getBook(this.editBookID)
+    console.log(this.form)
     this.loading = false
   },
   methods: {

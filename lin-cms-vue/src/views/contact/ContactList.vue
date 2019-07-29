@@ -29,7 +29,7 @@
             <template slot-scope="scope">
               <el-button
                 size="mini"
-                @click="handleEdit(scope.row)">编辑</el-button>
+                @click="handleEdit(scope.$index, scope.row)">编辑</el-button>
               <el-button
                 size="mini"
                 type="danger"
@@ -47,19 +47,21 @@
 <script>
 import Contact from '@/models/contact'
 import ContactEdit from './ContachEdit'
+
 export default {
   data() {
     return {
       tableData: [],
-      showEdit:true,
-      editContactID: 1
+      showEdit: true,
+      editContactID: 1,
     }
   },
   components: {
-    ContactEdit
+    ContactEdit,
   },
   async created() {
     this.getContacts()
+    this.handleEdit()
   },
   methods: {
     async getContacts() {
@@ -68,19 +70,20 @@ export default {
         this.tableData = contacts
       } catch (error) {
         if (error.error_code === 10020) {
-          error: "资源不存在"
+          this.tableData = []
         }
       }
     },
-    async handleEdit(row) {
+    async handleEdit(index, row) {
       this.showEdit = false
+      this.editContactID = await row.id
+      // console.log(index)
       // console.log(row)
-      this.editContactID = row.id
     },
-    editShow () {
+    editShow() {
       this.showEdit = true
-    }
-  }
+    },
+  },
 }
 </script>
 

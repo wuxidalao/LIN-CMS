@@ -18,6 +18,7 @@ class Contact {
     const res = await get(`v1/book/${id}`)
     return res
   }
+
   // 编辑
   async editContact(id, info) {
     const res = await put(`v1/contact/${id}`, info)
