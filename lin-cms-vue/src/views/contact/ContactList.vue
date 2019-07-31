@@ -33,7 +33,7 @@
               <el-button
                 size="mini"
                 type="danger"
-                @click="handleDelete(scope.$index, scope.row)">删除</el-button>
+                @click="handleDelete">删除</el-button>
             </template>
           </el-table-column>
         </el-table>
@@ -75,10 +75,26 @@ export default {
       }
     },
     async handleEdit(index, row) {
-      this.showEdit = false
+      this.showEdit = true
       this.editContactID = await row.id
       // console.log(index)
       // console.log(row)
+    },
+    async handleDelete(val) {
+      this.$confirm('此操作将永久删除该图书, 是否继续?', '提示', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning',
+      }).then(async () => {
+        const res = await Contact.deleteContact(val.row.id)
+        if (res.error_code === 0) {
+          this.getContacts()
+          this.$message({
+            type: 'success',
+            message: `${res.msg}`,
+          })
+        }
+      })
     },
     editShow() {
       this.showEdit = true

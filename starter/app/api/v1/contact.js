@@ -55,8 +55,8 @@ contactApi.post('/', async ctx => {
 // 删除联系人
 contactApi.linDelete('/deleteContact', '/:id',
   {
-    auth: '删除图书',
-    module: '图书',
+    auth: '删除联系人',
+    module: '联系人',
     mount: false
   },
   async ctx => {
